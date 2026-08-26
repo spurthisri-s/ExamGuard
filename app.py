@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 from database import init_db , get_db
 
 app = Flask(__name__)
-init_db ()
+init_db
 
 @app.route("/")
 def home():
@@ -80,39 +80,7 @@ def login():
         return "Invalid email or password"
 
     return render_template("login.html")
-        
-
-
-
+            
 if __name__ == "__main__":
+    init_db()
     app.run(debug=True)
-database.py 
-#in database.py we write the code related to python and sqlite connection
-import sqlite3
-
-DB = "database/examguard.db"
-
-def get_db():
-    connection = sqlite3.connect(DB)
-    return connection
-
-
-def init_db():
-    connection = get_db()
-
-
-
-    connection.execute( """ 
-
-        create table if not exists candidates(
-            id integer  primary key AUTOINCREMENT,
-            name text not null,
-            email text unique not null,
-            password text not null
-        )
-    
-    """
-
-    )
-    connection.commit()
-    connection.close()
