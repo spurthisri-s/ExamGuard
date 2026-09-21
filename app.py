@@ -213,6 +213,14 @@ def start_exam():
     connection = get_db()
 
     try:
+        candidate = connection.execute("""
+            SELECT * FROM candidates WHERE id = ?
+        """, (session["candidate_id"],)).fetchone()
+
+        if not candidate:
+            session.clear()
+            return redirect(url_for("login"))
+
         connection.execute("""
             INSERT INTO exam_sessions
                 (candidate_id, session_id, status, started_at)
@@ -222,12 +230,17 @@ def start_exam():
             exam_session_id,
             datetime.now().isoformat(),
         ))
+
         connection.commit()
 
     finally:
         connection.close()
 
-    return render_template("exam.html", candidate_name=session.get("candidate_name"))
+    return render_template(
+        "exam.html",
+        candidate=candidate,
+        candidate_name=session.get("candidate_name")
+    )
 
 
 # ------------------------------------------------
@@ -247,6 +260,7 @@ def pause_exam():
             SET status = 'paused', paused_at = ?
             WHERE session_id = ?
         """, (datetime.now().isoformat(), session["exam_session_id"]))
+
         connection.commit()
 
     finally:
@@ -269,6 +283,7 @@ def resume_exam():
             SET status = 'in_progress', resumed_at = ?
             WHERE session_id = ?
         """, (datetime.now().isoformat(), session["exam_session_id"]))
+
         connection.commit()
 
     finally:
@@ -291,6 +306,7 @@ def submit_exam():
             SET status = 'submitted', submitted_at = ?
             WHERE session_id = ?
         """, (datetime.now().isoformat(), session["exam_session_id"]))
+
         connection.commit()
 
     finally:
@@ -298,11 +314,9 @@ def submit_exam():
 
     session.pop("exam_session_id", None)
 
-    return {
-        "success": True,
-        "message": "Exam submitted",
-        "redirect": url_for("dashboard"),
-    }
+    # Changed only this part:
+    # Instead of showing JSON, go back to dashboard.
+    return redirect(url_for("dashboard"))
 
 
 # ------------------------------------------------
