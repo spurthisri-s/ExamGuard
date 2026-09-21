@@ -1,477 +1,548 @@
-<!DOCTYPE html>
+```html
+{% extends "base.html" %}
 
-<html>
+{% block title %}Register — ExamGuard{% endblock %}
 
-<head>
+{% block nav_links %}
+    <a href="{{ url_for('login') }}">Sign in</a>
+{% endblock %}
 
-    <title>Candidate Registration</title>
+{% block content %}
 
+<style>
+    /* =========================================
+       EXAMGUARD REGISTRATION PAGE
+       ========================================= */
 
-    <style>
+    .examguard-register {
+        width: 100%;
+        max-width: 650px;
+        margin: 35px auto;
+    }
 
-        body {
+    /* Main Card */
+    .examguard-register .card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        padding: 35px;
+        box-shadow: 0 15px 40px rgba(15, 23, 42, 0.10);
+        animation: registerAppear 0.45s ease;
+    }
 
-            font-family: Arial, sans-serif;
-
-            margin: 40px;
-
+    @keyframes registerAppear {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
         }
 
-
-        .form-container {
-
-            width: 500px;
-
-            margin: auto;
-
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
+    /* Heading */
+    .examguard-register h1 {
+        margin: 0 0 8px;
+        color: #111827;
+        font-size: 29px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
 
-        input {
+    /* Subtitle */
+    .examguard-register .subtitle {
+        margin: 0 0 25px;
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.7;
+    }
 
-            width: 100%;
+    /* Error Banner */
+    .examguard-register .banner {
+        padding: 13px 15px;
+        border-radius: 10px;
+        margin-bottom: 22px;
+        font-size: 14px;
+        line-height: 1.5;
+    }
 
-            padding: 10px;
+    .examguard-register .banner-error {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #b91c1c;
+    }
 
-            margin-top: 5px;
+    /* Form */
+    .examguard-register form {
+        display: flex;
+        flex-direction: column;
+    }
 
+    /* Labels */
+    .examguard-register label {
+        margin-bottom: 7px;
+        color: #334155;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    /* Input Fields */
+    .examguard-register input[type="text"],
+    .examguard-register input[type="email"],
+    .examguard-register input[type="password"] {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 14px;
+        margin-bottom: 18px;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #111827;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.2s ease;
+    }
+
+    .examguard-register input:hover {
+        border-color: #94a3b8;
+    }
+
+    .examguard-register input:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    }
+
+    /* Candidate Photo Heading */
+    .examguard-register h3 {
+        margin-bottom: 7px;
+        color: #111827;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    /* Helper Text */
+    .examguard-register .helper-text {
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* Camera Information */
+    .camera-section {
+        margin-top: 22px;
+        padding: 20px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+    }
+
+    /* Camera */
+    .examguard-register #camera {
+        width: 100%;
+        max-width: 420px !important;
+        height: auto;
+        min-height: 240px;
+        object-fit: cover;
+        border-radius: 14px !important;
+        border: 3px solid #e2e8f0 !important;
+        display: block;
+        margin: 15px auto 0 !important;
+        background: #0f172a !important;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+    }
+
+    /* Captured Photo */
+    .examguard-register .photo-preview {
+        width: 100%;
+        max-width: 420px;
+        max-height: 320px;
+        object-fit: cover;
+        border-radius: 14px;
+        border: 3px solid #6366f1;
+        margin: 18px auto 0;
+        display: block;
+        box-shadow: 0 8px 25px rgba(79, 70, 229, 0.18);
+    }
+
+    /* Button Row */
+    .examguard-register .btn-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 18px !important;
+    }
+
+    /* Buttons */
+    .examguard-register .btn {
+        border: none;
+        border-radius: 10px;
+        padding: 13px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    /* Secondary Buttons */
+    .examguard-register .btn-secondary {
+        flex: 1;
+        background: #eef2ff;
+        color: #4338ca;
+        border: 1px solid #c7d2fe;
+    }
+
+    .examguard-register .btn-secondary:hover:not(:disabled) {
+        background: #e0e7ff;
+        transform: translateY(-1px);
+    }
+
+    /* Disabled Button */
+    .examguard-register button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Primary Button */
+    .examguard-register .btn-primary {
+        background: linear-gradient(135deg, #4f46e5, #6366f1);
+        color: #ffffff;
+        box-shadow: 0 7px 18px rgba(79, 70, 229, 0.25);
+    }
+
+    .examguard-register .btn-primary:hover:not(:disabled) {
+        background: linear-gradient(135deg, #4338ca, #4f46e5);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+    }
+
+    /* Full Width Button */
+    .examguard-register .btn-block {
+        width: 100%;
+        margin-top: 20px;
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+
+    /* Photo Status */
+    .examguard-register #photoStatus {
+        min-height: 20px;
+        margin: 14px 0 0;
+        padding: 8px 0;
+        color: #475569;
+        font-size: 13px;
+    }
+
+    /* =========================================
+       MOBILE RESPONSIVE
+       ========================================= */
+
+    @media (max-width: 650px) {
+
+        .examguard-register {
+            margin: 20px auto;
+            padding: 0 5px;
             box-sizing: border-box;
-
         }
 
-
-        button {
-
-            padding: 10px 20px;
-
-            margin: 10px 5px 10px 0;
-
-            cursor: pointer;
-
+        .examguard-register .card {
+            padding: 25px 20px;
+            border-radius: 16px;
         }
 
-
-        video {
-
-            width: 400px;
-
-            height: 300px;
-
-            border: 2px solid black;
-
-            display: block;
-
-            margin-top: 10px;
-
+        .examguard-register h1 {
+            font-size: 24px;
         }
 
-
-        #preview {
-
-            width: 400px;
-
-            border: 2px solid green;
-
-            margin-top: 10px;
-
-            display: none;
-
+        .examguard-register .subtitle {
+            font-size: 13px;
         }
 
-
-        #canvas {
-
-            display: none;
-
+        .examguard-register #camera {
+            min-height: 200px;
         }
 
-
-        #photoStatus {
-
-            font-weight: bold;
-
+        .examguard-register .btn-row {
+            flex-direction: column;
         }
 
-    </style>
+        .examguard-register .btn-secondary {
+            width: 100%;
+        }
+    }
 
-</head>
+    @media (max-width: 400px) {
 
+        .examguard-register .card {
+            padding: 20px 16px;
+        }
 
-<body>
+        .examguard-register h1 {
+            font-size: 22px;
+        }
 
+        .examguard-register h3 {
+            font-size: 17px;
+        }
 
-<div class="form-container">
-
-
-    <h2>Candidate Registration</h2>
-
-
-    <form method="POST" id="registerForm">
-
-
-        <!-- NAME -->
-
-        <label>Name</label>
-
-        <input
-            type="text"
-            name="name"
-            required
-        >
+        .examguard-register #camera {
+            min-height: 180px;
+        }
+    }
+</style>
 
 
-        <br>
+<div class="examguard-register">
+
+    <div class="card">
+
+        <h1>Candidate registration</h1>
+
+        <p class="subtitle">
+            Your details and a live photo are required before you can sit an exam.
+            The photo is captured from your webcam right now — no file uploads.
+        </p>
 
 
-        <!-- EMAIL -->
-
-        <label>Email</label>
-
-        <input
-            type="email"
-            name="email"
-            required
-        >
+        {% if error %}
+            <div class="banner banner-error">
+                {{ error }}
+            </div>
+        {% endif %}
 
 
-        <br>
+        <form method="POST" id="registerForm">
+
+            <label>Full name</label>
+
+            <input
+                type="text"
+                name="name"
+                required
+            >
 
 
-        <!-- PASSWORD -->
+            <label>Email</label>
 
-        <label>Password</label>
-
-        <input
-            type="password"
-            name="password"
-            required
-        >
+            <input
+                type="email"
+                name="email"
+                required
+            >
 
 
-        <br><br>
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                required
+                minlength="6"
+            >
 
 
-        <!-- CAMERA -->
-
-        <h3>Candidate Photo</h3>
-
-
-        <video
-            id="camera"
-            autoplay
-            playsinline
-        ></video>
+            <h3 style="margin-top:32px;">
+                Candidate photo
+            </h3>
 
 
-        <br>
+            <p class="helper-text" style="margin-top:-2px;">
+                Used only for the invigilator's record — ExamGuard does not perform face
+                recognition, only presence checks during the exam.
+            </p>
 
 
-        <!-- START CAMERA -->
+            <div class="camera-section">
 
-        <button
-            type="button"
-            id="startCamera"
-        >
+                <video
+                    id="camera"
+                    autoplay
+                    playsinline
+                    style="width:100%;max-width:320px;border-radius:4px;border:1px solid var(--rule);display:block;margin-top:10px;background:#000;"
+                ></video>
 
-            Start Camera
+                <canvas id="canvas" style="display:none;"></canvas>
 
-        </button>
-
-
-        <!-- CAPTURE PHOTO -->
-
-        <button
-            type="button"
-            id="capturePhoto"
-            disabled
-        >
-
-            Capture Photo
-
-        </button>
+                <img
+                    id="preview"
+                    class="photo-preview"
+                    style="display:none;"
+                    alt="Captured photo"
+                >
 
 
-        <!-- CANVAS -->
+                <div class="btn-row" style="margin-top:14px;">
 
-        <canvas id="canvas"></canvas>
-
-
-        <!-- PHOTO PREVIEW -->
-
-        <img
-            id="preview"
-            alt="Captured Photo"
-        >
+                    <button
+                        type="button"
+                        id="startCamera"
+                        class="btn btn-secondary"
+                    >
+                        Start camera
+                    </button>
 
 
-        <p id="photoStatus"></p>
+                    <button
+                        type="button"
+                        id="capturePhoto"
+                        class="btn btn-secondary"
+                        disabled
+                    >
+                        Capture photo
+                    </button>
+
+                </div>
 
 
-        <br>
+                <p id="photoStatus" class="helper-text"></p>
+
+            </div>
 
 
-        <!-- REGISTER -->
+            <button
+                type="submit"
+                id="registerButton"
+                class="btn btn-primary btn-block"
+                disabled
+            >
+                Complete registration
+            </button>
 
-        <button
-            type="submit"
-            id="registerButton"
-            disabled
-        >
+        </form>
 
-            Register
-
-        </button>
-
-
-    </form>
-
+    </div>
 
 </div>
 
 
+{% endblock %}
+
+
+{% block content_scripts %}
+
 <script>
 
-
-    // ----------------------------------------
-    // Get HTML elements
-    // ----------------------------------------
-
-    const video =
-        document.getElementById("camera");
-
-
-    const canvas =
-        document.getElementById("canvas");
-
-
-    const preview =
-        document.getElementById("preview");
-
-
-    const startCameraButton =
-        document.getElementById("startCamera");
-
-
-    const captureButton =
-        document.getElementById("capturePhoto");
-
-
-    const registerButton =
-        document.getElementById("registerButton");
-
-
-    const photoStatus =
-        document.getElementById("photoStatus");
-
-
-    // Store camera stream
+    const video = document.getElementById("camera");
+    const canvas = document.getElementById("canvas");
+    const preview = document.getElementById("preview");
+    const startCameraButton = document.getElementById("startCamera");
+    const captureButton = document.getElementById("capturePhoto");
+    const registerButton = document.getElementById("registerButton");
+    const photoStatus = document.getElementById("photoStatus");
 
     let cameraStream = null;
 
 
+    // ---------------- START CAMERA ----------------
 
-    // ----------------------------------------
-    // START CAMERA
-    // ----------------------------------------
+    startCameraButton.addEventListener("click", async function () {
 
-    startCameraButton.addEventListener(
-        "click",
-        async function () {
+        try {
 
-            try {
+            cameraStream =
+                await navigator.mediaDevices.getUserMedia({
+                    video: true
+                });
 
-                // Ask browser for camera permission
+            video.srcObject = cameraStream;
 
-                cameraStream =
-                    await navigator.mediaDevices.getUserMedia({
-
-                        video: true
-
-                    });
-
-
-                // Show camera inside video element
-
-                video.srcObject =
-                    cameraStream;
-
-
-                // Enable capture button
-
-                captureButton.disabled =
-                    false
-                photoStatus.textContent =
-                    "Camera started. Position your face and click Capture Photo.";
-
-            }
-
-            catch (error) {
-
-                console.error(error);
-
-
-                photoStatus.textContent =
-                    "Unable to access camera. Please allow camera permission.";
-
-            }
-
-        }
-    );
-
-
-
-    // ----------------------------------------
-    // CAPTURE PHOTO
-    // ----------------------------------------
-
-    captureButton.addEventListener(
-        "click",
-        function () {
-
-
-            // Set canvas size same as camera
-
-            canvas.width =
-                video.videoWidth;
-
-
-            canvas.height =
-                video.videoHeight;
-
-
-            // Get canvas drawing context
-
-            const context =
-                canvas.getContext("2d");
-
-
-            // Copy video frame to canvas
-
-            context.drawImage(
-                video,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-
-
-            // Display captured image
-
-            const imageData =
-                canvas.toDataURL("image/jpeg");
-
-
-            preview.src =
-                imageData;
-
-
-            preview.style.display =
-                "block";
-
+            captureButton.disabled = false;
 
             photoStatus.textContent =
-                "Photo captured. Saving...";
+                "Camera started. Position your face and click Capture photo.";
 
+        } catch (error) {
 
+            console.error(error);
 
-            // Convert canvas image
-            // into Blob
-
-            canvas.toBlob(
-                async function (blob) {
-
-
-                    // Create form data
-
-                    const formData =
-                        new FormData();
-
-
-                    // Add photo
-
-                    formData.append(
-                        "photo",
-                        blob,
-                        "candidate.jpg"
-                    );
-
-
-
-                    // Send photo to Flask
-
-                    const response =
-                        await fetch(
-                            "/capture-photo",
-                            {
-                                method: "POST",
-                                body: formData
-                            }
-                        );
-
-
-
-                    // Convert response to JSON
-
-                    const result =
-                        await response.json();
-
-
-
-                    // Check result
-
-                    if (result.success) {
-
-
-                        photoStatus.textContent =
-                            "Photo captured successfully!";
-
-
-                        // Enable Register button
-
-                        registerButton.disabled =
-                            false;
-
-
-
-                        // Stop camera
-
-                        if (cameraStream) {
-
-                            cameraStream
-                                .getTracks()
-                                .forEach(
-                                    function(track) {
-
-                                        track.stop();
-
-                                    }
-                                );
-
-                        }
-
-                    }
-
-                    else {
-
-
-                        photoStatus.textContent =
-                            "Photo capture failed.";
-
-                    }
-
-
-                },
-                "image/jpeg"
-            );
+            photoStatus.textContent =
+                "Unable to access camera. Please allow camera permission.";
 
         }
-    );
 
+    });
+
+
+    // ---------------- CAPTURE PHOTO ----------------
+
+    captureButton.addEventListener("click", function () {
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        const context = canvas.getContext("2d");
+
+        context.drawImage(
+            video,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        preview.src =
+            canvas.toDataURL("image/jpeg");
+
+        preview.style.display = "block";
+
+        photoStatus.textContent =
+            "Photo captured. Saving...";
+
+
+        canvas.toBlob(async function (blob) {
+
+            const formData = new FormData();
+
+            formData.append(
+                "photo",
+                blob,
+                "candidate.jpg"
+            );
+
+
+            const response = await fetch(
+                "/capture-photo",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+            const result = await response.json();
+
+
+            if (result.success) {
+
+                photoStatus.textContent =
+                    "Photo captured successfully.";
+
+                registerButton.disabled = false;
+
+
+                if (cameraStream) {
+
+                    cameraStream
+                        .getTracks()
+                        .forEach(track => track.stop());
+
+                }
+
+            } else {
+
+                photoStatus.textContent =
+                    "Photo capture failed. Please try again.";
+
+            }
+
+        }, "image/jpeg");
+
+    });
 
 </script>
 
-
-</body>
-
-</html>
+{% endblock %}
+```
