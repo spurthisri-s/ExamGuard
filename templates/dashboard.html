@@ -8,340 +8,1253 @@
 
 {% endblock %}
 
+
 {% block content %}
 
 <style>
-    /* ================================
-       EXAMGUARD DASHBOARD
-       ================================ */
+
+/* =========================================================
+   EXAMGUARD — PROFESSIONAL CANDIDATE DASHBOARD
+   Existing Flask/Jinja functionality preserved
+   ========================================================= */
+
+.examguard-dashboard {
+
+    width: 100%;
+    max-width: 1120px;
+
+    margin: 0 auto;
+
+    padding: 34px 20px 55px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DASHBOARD HEADER
+   ========================================================= */
+
+.examguard-dashboard .dashboard-header {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 28px;
+}
+
+
+.examguard-dashboard .dashboard-eyebrow {
+
+    margin: 0 0 7px;
+
+    color: #6366f1;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+.examguard-dashboard .dashboard-title {
+
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 30px;
+
+    line-height: 1.2;
+
+    font-weight: 750;
+
+    letter-spacing: -0.8px;
+}
+
+
+.examguard-dashboard .dashboard-subtitle {
+
+    margin: 8px 0 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MAIN WELCOME CARD
+   ========================================================= */
+
+.examguard-dashboard .welcome-card {
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 35px;
+
+    padding: 34px;
+
+    margin-bottom: 24px;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f8fafc 100%
+        );
+
+    box-shadow:
+        0 18px 50px rgba(15, 23, 42, 0.08);
+
+    overflow: hidden;
+
+    animation:
+        cardAppear 0.45s ease;
+}
+
+
+@keyframes cardAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(14px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* Decorative background */
+
+.examguard-dashboard .welcome-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    right: -145px;
+    top: -155px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(99,102,241,0.12),
+            rgba(99,102,241,0)
+        );
+
+    pointer-events: none;
+}
+
+
+.examguard-dashboard .welcome-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    left: -130px;
+    bottom: -140px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37,99,235,0.07),
+            rgba(37,99,235,0)
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CANDIDATE IDENTITY
+   ========================================================= */
+
+.examguard-dashboard .identity-row {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 23px;
+}
+
+
+.examguard-dashboard .candidate-avatar {
+
+    width: 78px;
+    height: 78px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 20px;
+
+    border:
+        3px solid #ffffff;
+
+    background: #e2e8f0;
+
+    box-shadow:
+        0 8px 25px rgba(79,70,229,0.18);
+}
+
+
+.examguard-dashboard .avatar-placeholder {
+
+    width: 78px;
+    height: 78px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    color: #6366f1;
+
+    background:
+        linear-gradient(
+            145deg,
+            #eef2ff,
+            #e0e7ff
+        );
+
+    font-size: 25px;
+
+    font-weight: 750;
+
+    border:
+        1px solid #c7d2fe;
+}
+
+
+.examguard-dashboard .candidate-label {
+
+    margin: 0 0 5px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    font-weight: 750;
+
+    letter-spacing: 1.2px;
+
+    text-transform: uppercase;
+}
+
+
+.examguard-dashboard .identity-row h1 {
+
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 27px;
+
+    line-height: 1.2;
+
+    font-weight: 750;
+
+    letter-spacing: -0.5px;
+}
+
+
+.examguard-dashboard .subtitle {
+
+    margin: 5px 0 0;
+
+    color: #64748b !important;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   EXAM INFORMATION
+   ========================================================= */
+
+.examguard-dashboard .exam-description {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    max-width: 700px;
+
+    margin: 0;
+
+    padding: 15px 17px;
+
+    border:
+        1px solid #e0e7ff;
+
+    border-left:
+        4px solid #6366f1;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #eef2ff
+        );
+
+    color: #475569 !important;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+.examguard-dashboard .exam-description-icon {
+
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #4f46e5;
+
+    font-size: 13px;
+
+    font-weight: 750;
+
+    box-shadow:
+        0 3px 10px rgba(79,70,229,0.08);
+}
+
+
+/* =========================================================
+   START EXAM AREA
+   ========================================================= */
+
+.examguard-dashboard .exam-action {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    min-width: 220px;
+}
+
+
+.examguard-dashboard .ready-label {
+
+    margin: 0 0 9px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   START EXAM BUTTON
+   ========================================================= */
+
+.examguard-dashboard .btn.btn-primary {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 50px;
+
+    padding:
+        0 22px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #6366f1
+        );
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 9px 22px rgba(79,70,229,0.25);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.examguard-dashboard .btn.btn-primary:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #4338ca,
+            #4f46e5
+        );
+
+    box-shadow:
+        0 13px 28px rgba(79,70,229,0.32);
+}
+
+
+.examguard-dashboard .btn.btn-primary:active {
+
+    transform:
+        translateY(0);
+}
+
+
+.examguard-dashboard .btn-arrow {
+
+    font-size: 16px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+.examguard-dashboard .btn.btn-primary:hover .btn-arrow {
+
+    transform:
+        translateX(3px);
+}
+
+
+/* =========================================================
+   SECURITY INDICATORS
+   ========================================================= */
+
+.examguard-dashboard .security-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 19px;
+}
+
+
+.examguard-dashboard .security-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+.examguard-dashboard .security-dot {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 3px rgba(34,197,94,0.10);
+}
+
+
+/* =========================================================
+   RECENT SESSIONS CARD
+   ========================================================= */
+
+.examguard-dashboard .sessions-card {
+
+    padding: 30px;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 12px 35px rgba(15,23,42,0.06);
+
+    animation:
+        cardAppear 0.55s ease;
+}
+
+
+/* =========================================================
+   SESSIONS HEADER
+   ========================================================= */
+
+.examguard-dashboard .sessions-header {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 21px;
+}
+
+
+.examguard-dashboard .sessions-header h2 {
+
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 20px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.3px;
+}
+
+
+.examguard-dashboard .sessions-header p {
+
+    margin: 5px 0 0;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+.examguard-dashboard .session-count {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 30px;
+    height: 30px;
+
+    padding: 0 9px;
+
+    border-radius: 9px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 11px;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.examguard-dashboard .table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 14px;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.examguard-dashboard table {
+
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    background: #ffffff;
+}
+
+
+.examguard-dashboard thead {
+
+    background:
+        #f8fafc;
+}
+
+
+.examguard-dashboard th {
+
+    padding:
+        14px 17px;
+
+    text-align: left;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 750;
+
+    letter-spacing: 0.7px;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    border-bottom:
+        1px solid #e2e8f0;
+}
+
+
+.examguard-dashboard td {
+
+    padding:
+        15px 17px;
+
+    color: #334155;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+
+    border-bottom:
+        1px solid #f1f5f9;
+}
+
+
+.examguard-dashboard tbody tr {
+
+    transition:
+        background 0.18s ease;
+}
+
+
+.examguard-dashboard tbody tr:hover {
+
+    background:
+        #f8fafc;
+}
+
+
+.examguard-dashboard tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   SESSION ID
+   ========================================================= */
+
+.examguard-dashboard .session-id {
+
+    color: #334155;
+
+    font-family:
+        "Consolas",
+        "Courier New",
+        monospace;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.examguard-dashboard .badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding:
+        6px 10px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: capitalize;
+
+    white-space: nowrap;
+}
+
+
+.examguard-dashboard .badge::before {
+
+    content: "";
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+}
+
+
+.examguard-dashboard .badge-submitted {
+
+    background: #ecfdf5;
+
+    color: #047857;
+}
+
+
+.examguard-dashboard .badge-submitted::before {
+
+    background: #10b981;
+}
+
+
+.examguard-dashboard .badge-paused {
+
+    background: #fffbeb;
+
+    color: #b45309;
+}
+
+
+.examguard-dashboard .badge-paused::before {
+
+    background: #f59e0b;
+}
+
+
+.examguard-dashboard .badge-progress {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+.examguard-dashboard .badge-progress::before {
+
+    background: #3b82f6;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.examguard-dashboard .helper-text {
+
+    padding: 40px 25px;
+
+    margin: 0;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #ffffff
+        );
+
+    border:
+        1px dashed #cbd5e1;
+
+    border-radius: 14px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
 
     .examguard-dashboard {
-        max-width: 1050px;
-        margin: 0 auto;
-        padding: 20px 10px 40px;
+
+        padding:
+            25px 15px 45px;
     }
 
-    /* Main Cards */
 
-    .examguard-dashboard .card {
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
+    .examguard-dashboard .welcome-card {
+
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+
+        padding: 28px;
+    }
+
+
+    .examguard-dashboard .exam-action {
+
+        align-items: flex-start;
+
+        min-width: 0;
+    }
+
+
+    .examguard-dashboard .dashboard-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .examguard-dashboard {
+
+        padding:
+            20px 12px 35px;
+    }
+
+
+    .examguard-dashboard .dashboard-title {
+
+        font-size: 26px;
+    }
+
+
+    .examguard-dashboard .welcome-card {
+
+        padding: 23px;
+
+        border-radius: 19px;
+    }
+
+
+    .examguard-dashboard .sessions-card {
+
+        padding: 20px;
+
         border-radius: 18px;
-        padding: 30px;
-        margin-bottom: 25px;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-        transition: 0.25s ease;
     }
 
-    .examguard-dashboard .card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.12);
-    }
-
-    /* Candidate Section */
 
     .examguard-dashboard .identity-row {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 24px;
+
+        align-items: flex-start;
+
+        gap: 13px;
     }
 
-    .examguard-dashboard .candidate-avatar {
-        width: 85px;
-        height: 85px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid #eef2ff;
-        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.20);
+
+    .examguard-dashboard .candidate-avatar,
+    .examguard-dashboard .avatar-placeholder {
+
+        width: 62px;
+        height: 62px;
+
+        border-radius: 16px;
     }
+
 
     .examguard-dashboard .identity-row h1 {
-        margin-top: 0;
-        color: #111827;
-        font-size: 29px;
-        font-weight: 700;
-        letter-spacing: -0.5px;
+
+        font-size: 21px;
     }
+
 
     .examguard-dashboard .subtitle {
-        color: #64748b !important;
-        font-size: 14px;
+
+        font-size: 12px;
     }
 
-    /* Description */
 
     .examguard-dashboard .exam-description {
-        color: #475569 !important;
-        background: #f8fafc;
-        border-left: 4px solid #6366f1;
-        border-radius: 8px;
-        padding: 16px 18px;
-        line-height: 1.7;
-        margin: 20px 0 25px;
-        font-size: 15px;
+
+        font-size: 12px;
     }
 
-    /* Start Examination Button */
 
     .examguard-dashboard .btn.btn-primary {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 14px 26px;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #4f46e5, #6366f1);
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 15px;
-        font-weight: 600;
-        border: none;
-        box-shadow: 0 7px 18px rgba(79, 70, 229, 0.25);
-        transition: all 0.25s ease;
-    }
 
-    .examguard-dashboard .btn.btn-primary:hover {
-        transform: translateY(-2px);
-        background: linear-gradient(135deg, #4338ca, #4f46e5);
-        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
-    }
-
-    .examguard-dashboard .btn.btn-primary:active {
-        transform: translateY(0);
-    }
-
-    /* Recent Sessions Heading */
-
-    .examguard-dashboard h2 {
-        margin-top: 0;
-        margin-bottom: 20px;
-        color: #111827;
-        font-size: 21px;
-        font-weight: 700;
-    }
-
-    /* Table */
-
-    .examguard-dashboard .table-wrapper {
         width: 100%;
-        overflow-x: auto;
-        border-radius: 12px;
     }
 
-    .examguard-dashboard table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        overflow: hidden;
-        background: #ffffff;
+
+    .examguard-dashboard .security-row {
+
+        flex-wrap: wrap;
+
+        gap: 9px 14px;
     }
 
-    .examguard-dashboard thead {
-        background: #f8fafc;
+
+    .examguard-dashboard .sessions-header {
+
+        align-items: flex-start;
     }
 
-    .examguard-dashboard th {
-        padding: 15px 16px;
-        text-align: left;
-        color: #64748b;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .examguard-dashboard .welcome-card {
+
+        padding: 19px;
     }
 
-    .examguard-dashboard td {
-        padding: 16px;
-        color: #334155;
-        font-size: 14px;
-        border-bottom: 1px solid #f1f5f9;
+
+    .examguard-dashboard .sessions-card {
+
+        padding: 17px;
     }
 
-    .examguard-dashboard tbody tr {
-        transition: background 0.2s ease;
+
+    .examguard-dashboard .dashboard-title {
+
+        font-size: 23px;
     }
 
-    .examguard-dashboard tbody tr:hover {
-        background: #f8fafc;
+
+    .examguard-dashboard .identity-row h1 {
+
+        font-size: 19px;
     }
 
-    .examguard-dashboard tbody tr:last-child td {
-        border-bottom: none;
-    }
+}
 
-    /* Status Badges */
-
-    .examguard-dashboard .badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 6px 11px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: capitalize;
-        white-space: nowrap;
-    }
-
-    .examguard-dashboard .badge-submitted {
-        background: #dcfce7;
-        color: #166534;
-    }
-
-    .examguard-dashboard .badge-paused {
-        background: #fef3c7;
-        color: #92400e;
-    }
-
-    .examguard-dashboard .badge-progress {
-        background: #dbeafe;
-        color: #1d4ed8;
-    }
-
-    /* Empty State */
-
-    .examguard-dashboard .helper-text {
-        padding: 28px;
-        text-align: center;
-        background: #f8fafc;
-        border: 1px dashed #cbd5e1;
-        border-radius: 12px;
-        color: #64748b;
-        font-size: 14px;
-    }
-
-    /* ================================
-       RESPONSIVE DESIGN
-       ================================ */
-
-    @media (max-width: 768px) {
-
-        .examguard-dashboard {
-            padding: 10px 5px 30px;
-        }
-
-        .examguard-dashboard .card {
-            padding: 22px;
-            border-radius: 15px;
-        }
-
-        .examguard-dashboard .identity-row {
-            gap: 14px;
-        }
-
-        .examguard-dashboard .candidate-avatar {
-            width: 70px;
-            height: 70px;
-        }
-
-        .examguard-dashboard .identity-row h1 {
-            font-size: 23px;
-        }
-
-        .examguard-dashboard .btn.btn-primary {
-            width: 100%;
-        }
-
-        .examguard-dashboard .table-wrapper {
-            overflow-x: auto;
-        }
-
-        .examguard-dashboard table {
-            min-width: 650px;
-        }
-    }
-
-    @media (max-width: 480px) {
-
-        .examguard-dashboard .card {
-            padding: 18px;
-        }
-
-        .examguard-dashboard .identity-row {
-            align-items: flex-start;
-        }
-
-        .examguard-dashboard .candidate-avatar {
-            width: 58px;
-            height: 58px;
-        }
-
-        .examguard-dashboard .identity-row h1 {
-            font-size: 19px;
-        }
-
-        .examguard-dashboard .subtitle {
-            font-size: 12px;
-        }
-
-        .examguard-dashboard .exam-description {
-            font-size: 14px;
-        }
-
-        .examguard-dashboard h2 {
-            font-size: 18px;
-        }
-    }
 </style>
 
 
 <div class="examguard-dashboard">
 
-    <div class="card">
 
-        <div class="identity-row">
+    <!-- =====================================================
+         DASHBOARD HEADER
+         ===================================================== -->
 
-            {% if candidate['photo'] %}
+    <div class="dashboard-header">
 
-                <img class="candidate-avatar"
-                     src="/{{ candidate['photo'] }}"
-                     alt="Candidate photo">
+        <div>
 
-            {% endif %}
+            <p class="dashboard-eyebrow">
+                Candidate portal
+            </p>
 
-            <div>
+            <h1 class="dashboard-title">
+                Examination dashboard
+            </h1>
 
-                <h1 style="margin-bottom:2px;">
-                    Welcome, {{ candidate['name'] }}
-                </h1>
-
-                <p class="subtitle" style="margin:0;">
-                    {{ candidate['email'] }}
-                </p>
-
-            </div>
+            <p class="dashboard-subtitle">
+                Manage your examination session and review your recent activity.
+            </p>
 
         </div>
-
-
-        <p class="exam-description">
-
-            When you're ready, start your examination. Your camera and browser activity
-            will be monitored for the duration of the session, as outlined in your
-            exam instructions.
-
-        </p>
-
-
-        <a href="{{ url_for('start_exam') }}"
-           class="btn btn-primary">
-
-            Start examination
-
-        </a>
 
     </div>
 
 
-    <div class="card">
+    <!-- =====================================================
+         WELCOME / START EXAM CARD
+         ===================================================== -->
 
-        <h2>Your recent sessions</h2>
+    <section class="welcome-card">
+
+
+        <div>
+
+
+            <!-- Candidate identity -->
+
+            <div class="identity-row">
+
+
+                {% if candidate['photo'] %}
+
+                    <img
+                        class="candidate-avatar"
+                        src="/{{ candidate['photo'] }}"
+                        alt="Candidate photo"
+                    >
+
+                {% else %}
+
+                    <div class="avatar-placeholder">
+                        {{ candidate['name'][0]|upper }}
+                    </div>
+
+                {% endif %}
+
+
+                <div>
+
+                    <p class="candidate-label">
+                        Candidate
+                    </p>
+
+                    <h1>
+                        Welcome, {{ candidate['name'] }}
+                    </h1>
+
+                    <p class="subtitle">
+                        {{ candidate['email'] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Examination information -->
+
+            <div class="exam-description">
+
+                <div class="exam-description-icon">
+                    !
+                </div>
+
+                <div>
+
+                    When you're ready, start your examination.
+                    Your camera and browser activity will be monitored
+                    for the duration of the session, as outlined in your
+                    exam instructions.
+
+                </div>
+
+            </div>
+
+
+            <!-- Security indicators -->
+
+            <div class="security-row">
+
+                <div class="security-item">
+
+                    <span class="security-dot"></span>
+
+                    Camera monitoring
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <span class="security-dot"></span>
+
+                    Browser activity
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <span class="security-dot"></span>
+
+                    Session tracking
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Start examination -->
+
+        <div class="exam-action">
+
+            <p class="ready-label">
+                Ready to begin?
+            </p>
+
+            <a
+                href="{{ url_for('start_exam') }}"
+                class="btn btn-primary"
+            >
+
+                Start examination
+
+                <span class="btn-arrow">
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         RECENT SESSIONS
+         ===================================================== -->
+
+    <section class="sessions-card">
+
+
+        <div class="sessions-header">
+
+            <div>
+
+                <h2>
+                    Your recent sessions
+                </h2>
+
+                <p>
+                    Examination session history
+                </p>
+
+            </div>
+
+
+            {% if recent_sessions %}
+
+                <span class="session-count">
+                    {{ recent_sessions|length }}
+                </span>
+
+            {% endif %}
+
+        </div>
 
 
         {% if recent_sessions %}
+
 
             <div class="table-wrapper">
 
@@ -351,10 +1264,21 @@
 
                         <tr>
 
-                            <th>Session</th>
-                            <th>Status</th>
-                            <th>Started</th>
-                            <th>Submitted</th>
+                            <th>
+                                Session
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Started
+                            </th>
+
+                            <th>
+                                Submitted
+                            </th>
 
                         </tr>
 
@@ -367,29 +1291,48 @@
 
                         <tr>
 
+
+                            <!-- Session ID -->
+
                             <td>
-                                {{ s['session_id'][:8] }}…
+
+                                <span class="session-id">
+
+                                    {{ s['session_id'][:8] }}…
+
+                                </span>
+
                             </td>
 
+
+                            <!-- Status -->
 
                             <td>
 
                                 {% if s['status'] == 'submitted' %}
 
                                     <span class="badge badge-submitted">
+
                                         submitted
+
                                     </span>
+
 
                                 {% elif s['status'] == 'paused' %}
 
                                     <span class="badge badge-paused">
+
                                         paused
+
                                     </span>
+
 
                                 {% else %}
 
                                     <span class="badge badge-progress">
+
                                         in progress
+
                                     </span>
 
                                 {% endif %}
@@ -397,14 +1340,23 @@
                             </td>
 
 
+                            <!-- Started -->
+
                             <td>
+
                                 {{ s['started_at'][:19] }}
+
                             </td>
 
+
+                            <!-- Submitted -->
 
                             <td>
+
                                 {{ s['submitted_at'][:19] if s['submitted_at'] else '—' }}
+
                             </td>
+
 
                         </tr>
 
@@ -416,15 +1368,22 @@
 
             </div>
 
+
         {% else %}
 
+
             <p class="helper-text">
+
                 No exam sessions yet.
+
             </p>
+
 
         {% endif %}
 
-    </div>
+
+    </section>
+
 
 </div>
 

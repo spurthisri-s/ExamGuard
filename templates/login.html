@@ -1,40 +1,53 @@
-```html
 {% extends "base.html" %}
 
 {% block title %}Sign in — ExamGuard{% endblock %}
 {% block main_class %}page-narrow{% endblock %}
 
-{% block nav_links %}
-    <a href="{{ url_for('register') }}">Register</a>
-{% endblock %}
+{# Remove the Register link from the top navigation #}
+{% block nav_links %}{% endblock %}
 
 {% block content %}
 
 <style>
-    /* =========================================
-       EXAMGUARD SIGN-IN PAGE
-       ========================================= */
+    /* =========================================================
+       EXAMGUARD — PROFESSIONAL SIGN-IN UI
+       Functionality and Flask/Jinja logic unchanged
+       ========================================================= */
 
     .examguard-login {
         width: 100%;
-        max-width: 480px;
-        margin: 45px auto;
+        max-width: 1040px;
+        margin: 55px auto;
+        padding: 0 20px;
+        box-sizing: border-box;
     }
 
-    /* Main Card */
-    .examguard-login .card {
+    /* =========================================================
+       MAIN LOGIN CONTAINER
+       ========================================================= */
+
+    .examguard-login .login-shell {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        min-height: 590px;
+
         background: #ffffff;
         border: 1px solid #e5e7eb;
-        border-radius: 20px;
-        padding: 35px;
-        box-shadow: 0 15px 40px rgba(15, 23, 42, 0.10);
-        animation: cardAppear 0.45s ease;
+        border-radius: 28px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 25px 70px rgba(15, 23, 42, 0.12),
+            0 5px 20px rgba(15, 23, 42, 0.05);
+
+        animation: examGuardAppear 0.55s ease;
     }
 
-    @keyframes cardAppear {
+    @keyframes examGuardAppear {
         from {
             opacity: 0;
-            transform: translateY(12px);
+            transform: translateY(18px);
         }
 
         to {
@@ -43,245 +56,731 @@
         }
     }
 
-    /* Heading */
+
+    /* =========================================================
+       LEFT VISUAL PANEL
+       ========================================================= */
+
+    .examguard-login .visual-panel {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 55px;
+
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(99, 102, 241, 0.25),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 80% 75%,
+                rgba(37, 99, 235, 0.18),
+                transparent 38%
+            ),
+            linear-gradient(
+                145deg,
+                #0b1220 0%,
+                #111827 55%,
+                #172554 100%
+            );
+
+        overflow: hidden;
+    }
+
+
+    /* Decorative circles */
+
+    .examguard-login .visual-panel::before {
+        content: "";
+        position: absolute;
+
+        width: 320px;
+        height: 320px;
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+
+        top: -120px;
+        left: -100px;
+    }
+
+
+    .examguard-login .visual-panel::after {
+        content: "";
+        position: absolute;
+
+        width: 420px;
+        height: 420px;
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 50%;
+
+        bottom: -220px;
+        right: -180px;
+    }
+
+
+    /* =========================================================
+       SECURITY VISUAL
+       ========================================================= */
+
+    .examguard-login .security-visual {
+        position: relative;
+        z-index: 2;
+
+        width: 250px;
+        height: 250px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .examguard-login .security-ring {
+        position: absolute;
+
+        width: 210px;
+        height: 210px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(129, 140, 248, 0.28);
+
+        box-shadow:
+            0 0 0 18px rgba(99, 102, 241, 0.035),
+            0 0 0 36px rgba(99, 102, 241, 0.025);
+
+        animation: slowPulse 4s ease-in-out infinite;
+    }
+
+
+    @keyframes slowPulse {
+        0%,
+        100% {
+            transform: scale(1);
+            opacity: 0.7;
+        }
+
+        50% {
+            transform: scale(1.035);
+            opacity: 1;
+        }
+    }
+
+
+    .examguard-login .security-core {
+        position: relative;
+
+        width: 112px;
+        height: 112px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 32px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(99, 102, 241, 0.95),
+                rgba(37, 99, 235, 0.92)
+            );
+
+        border: 1px solid rgba(255, 255, 255, 0.18);
+
+        box-shadow:
+            0 20px 50px rgba(37, 99, 235, 0.35),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+        transform: rotate(45deg);
+    }
+
+
+    .examguard-login .security-core::before {
+        content: "";
+
+        width: 42px;
+        height: 42px;
+
+        border: 3px solid rgba(255, 255, 255, 0.95);
+        border-radius: 50%;
+
+        transform: rotate(-45deg);
+    }
+
+
+    .examguard-login .security-core::after {
+        content: "";
+
+        position: absolute;
+
+        width: 20px;
+        height: 10px;
+
+        border-left: 3px solid #ffffff;
+        border-bottom: 3px solid #ffffff;
+
+        transform:
+            rotate(-45deg)
+            translate(1px, -2px);
+    }
+
+
+    /* Small floating dots */
+
+    .examguard-login .dot {
+        position: absolute;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: #818cf8;
+
+        box-shadow: 0 0 15px rgba(129, 140, 248, 0.8);
+    }
+
+
+    .examguard-login .dot-one {
+        top: 18%;
+        right: 18%;
+    }
+
+
+    .examguard-login .dot-two {
+        bottom: 22%;
+        left: 18%;
+
+        width: 5px;
+        height: 5px;
+    }
+
+
+    .examguard-login .dot-three {
+        top: 31%;
+        left: 12%;
+
+        width: 4px;
+        height: 4px;
+    }
+
+
+    /* =========================================================
+       RIGHT LOGIN AREA
+       ========================================================= */
+
+    .examguard-login .login-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 60px 70px;
+
+        background: #ffffff;
+    }
+
+
+    /* =========================================================
+       HEADING
+       ========================================================= */
+
     .examguard-login h1 {
-        margin: 0 0 8px;
-        color: #111827;
-        font-size: 28px;
-        font-weight: 700;
-        letter-spacing: -0.5px;
+        margin: 0 0 10px;
+
+        color: #0f172a;
+
+        font-size: 32px;
+        line-height: 1.2;
+        font-weight: 750;
+
+        letter-spacing: -0.8px;
     }
 
-    /* Subtitle */
+
     .examguard-login .subtitle {
-        margin: 0 0 26px;
+        margin: 0 0 34px;
+
+        max-width: 430px;
+
         color: #64748b;
+
         font-size: 14px;
-        line-height: 1.6;
+        line-height: 1.7;
     }
 
-    /* Alerts */
+
+    /* =========================================================
+       ALERTS
+       ========================================================= */
+
     .examguard-login .banner {
         padding: 13px 15px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        font-size: 14px;
+
+        margin-bottom: 22px;
+
+        border-radius: 12px;
+
+        font-size: 13px;
         line-height: 1.5;
     }
 
+
     .examguard-login .banner-success {
         background: #ecfdf5;
+
         border: 1px solid #a7f3d0;
+
         color: #047857;
     }
 
+
     .examguard-login .banner-error {
         background: #fef2f2;
+
         border: 1px solid #fecaca;
+
         color: #b91c1c;
     }
 
-    /* Form */
+
+    /* =========================================================
+       FORM
+       ========================================================= */
+
     .examguard-login form {
         display: flex;
         flex-direction: column;
     }
 
-    /* Labels */
+
+    /* =========================================================
+       LABELS
+       ========================================================= */
+
     .examguard-login label {
-        margin-bottom: 7px;
+        margin-bottom: 8px;
+
         color: #334155;
-        font-size: 14px;
-        font-weight: 600;
+
+        font-size: 13px;
+        font-weight: 650;
     }
 
-    /* Input Fields */
+
+    /* =========================================================
+       INPUT FIELDS
+       ========================================================= */
+
     .examguard-login input {
         width: 100%;
         box-sizing: border-box;
-        padding: 13px 14px;
-        margin-bottom: 19px;
-        border: 1px solid #cbd5e1;
-        border-radius: 10px;
-        background: #ffffff;
-        color: #111827;
+
+        height: 50px;
+
+        padding: 0 15px;
+
+        margin-bottom: 20px;
+
+        border: 1px solid #dbe1ea;
+        border-radius: 12px;
+
+        background: #f8fafc;
+
+        color: #0f172a;
+
         font-size: 14px;
+
         outline: none;
-        transition: all 0.2s ease;
+
+        transition:
+            border-color 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
     }
+
 
     .examguard-login input::placeholder {
         color: #94a3b8;
     }
 
+
     .examguard-login input:hover {
-        border-color: #94a3b8;
+        border-color: #b8c1d1;
+
+        background: #ffffff;
     }
+
 
     .examguard-login input:focus {
         border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+
+        background: #ffffff;
+
+        box-shadow:
+            0 0 0 4px rgba(99, 102, 241, 0.10),
+            0 5px 15px rgba(15, 23, 42, 0.04);
+
+        transform: translateY(-1px);
     }
 
-    /* Sign In Button */
+
+    /* =========================================================
+       SIGN IN BUTTON
+       ========================================================= */
+
     .examguard-login .btn.btn-primary {
         width: 100%;
-        padding: 14px 20px;
-        margin-top: 4px;
+
+        height: 52px;
+
+        padding: 0 20px;
+
+        margin-top: 3px;
+
         border: none;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #4f46e5, #6366f1);
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #4f46e5 0%,
+                #6366f1 50%,
+                #2563eb 100%
+            );
+
         color: #ffffff;
-        font-size: 15px;
-        font-weight: 600;
+
+        font-size: 14px;
+        font-weight: 650;
+
+        letter-spacing: 0.1px;
+
         cursor: pointer;
-        box-shadow: 0 7px 18px rgba(79, 70, 229, 0.25);
-        transition: all 0.25s ease;
+
+        box-shadow:
+            0 10px 25px rgba(79, 70, 229, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            filter 0.2s ease;
     }
+
 
     .examguard-login .btn.btn-primary:hover {
         transform: translateY(-2px);
-        background: linear-gradient(135deg, #4338ca, #4f46e5);
-        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+
+        filter: brightness(1.03);
+
+        box-shadow:
+            0 15px 30px rgba(79, 70, 229, 0.30),
+            inset 0 1px 0 rgba(255, 255, 255, 0.18);
     }
+
 
     .examguard-login .btn.btn-primary:active {
         transform: translateY(0);
+
+        box-shadow:
+            0 7px 16px rgba(79, 70, 229, 0.22);
     }
 
-    /* Bottom Helper Text */
+
+    .examguard-login .btn.btn-primary:focus-visible {
+        outline: none;
+
+        box-shadow:
+            0 0 0 4px rgba(99, 102, 241, 0.18),
+            0 10px 25px rgba(79, 70, 229, 0.22);
+    }
+
+
+    /* =========================================================
+       BOTTOM HELPER TEXT
+       ========================================================= */
+
     .examguard-login .helper-text {
-        margin: 24px 0 0;
-        padding-top: 20px;
+        margin: 28px 0 0;
+
+        padding-top: 23px;
+
         border-top: 1px solid #eef2f7;
+
         text-align: center;
+
         color: #64748b;
+
         font-size: 13px;
-        line-height: 1.6;
+
+        line-height: 1.7;
     }
 
-    /* Register Link */
+
+    /* =========================================================
+       REGISTER LINK
+       ========================================================= */
+
     .examguard-login .text-link {
         color: #4f46e5;
-        font-weight: 600;
+
+        font-weight: 650;
+
         text-decoration: none;
-        transition: color 0.2s ease;
+
+        transition:
+            color 0.2s ease,
+            text-decoration-color 0.2s ease;
     }
+
 
     .examguard-login .text-link:hover {
         color: #3730a3;
+
         text-decoration: underline;
     }
 
-    /* =========================================
-       MOBILE RESPONSIVE
-       ========================================= */
+
+    /* =========================================================
+       RESPONSIVE — TABLET
+       ========================================================= */
+
+    @media (max-width: 850px) {
+
+        .examguard-login {
+            max-width: 620px;
+
+            margin: 35px auto;
+        }
+
+
+        .examguard-login .login-shell {
+            grid-template-columns: 1fr;
+
+            min-height: auto;
+        }
+
+
+        .examguard-login .visual-panel {
+            min-height: 210px;
+
+            padding: 35px;
+        }
+
+
+        .examguard-login .security-visual {
+            transform: scale(0.72);
+        }
+
+
+        .examguard-login .login-content {
+            padding: 45px 50px;
+        }
+    }
+
+
+    /* =========================================================
+       RESPONSIVE — MOBILE
+       ========================================================= */
 
     @media (max-width: 600px) {
 
         .examguard-login {
-            margin: 25px auto;
-            padding: 0 5px;
-            box-sizing: border-box;
+            margin: 20px auto;
+
+            padding: 0 12px;
         }
 
-        .examguard-login .card {
-            padding: 25px 20px;
-            border-radius: 16px;
+
+        .examguard-login .login-shell {
+            border-radius: 20px;
         }
+
+
+        .examguard-login .visual-panel {
+            min-height: 145px;
+
+            padding: 20px;
+        }
+
+
+        .examguard-login .security-visual {
+            transform: scale(0.50);
+        }
+
+
+        .examguard-login .login-content {
+            padding: 32px 24px 30px;
+        }
+
 
         .examguard-login h1 {
-            font-size: 24px;
+            font-size: 27px;
         }
 
+
         .examguard-login .subtitle {
+            margin-bottom: 27px;
+
             font-size: 13px;
         }
 
+
         .examguard-login input {
-            padding: 12px;
+            height: 48px;
+
+            padding: 0 13px;
+
+            margin-bottom: 18px;
         }
 
+
         .examguard-login .btn.btn-primary {
-            padding: 13px;
+            height: 50px;
+        }
+
+
+        .examguard-login .helper-text {
+            margin-top: 24px;
+
+            padding-top: 20px;
         }
     }
+
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .examguard-login .login-shell,
+        .examguard-login .security-ring,
+        .examguard-login input,
+        .examguard-login .btn.btn-primary {
+            animation: none !important;
+
+            transition: none !important;
+        }
+    }
+
 </style>
 
 
 <div class="examguard-login">
 
-    <div class="card">
-
-        <h1>Candidate sign in</h1>
-
-        <p class="subtitle">
-            Enter your registered email and password to begin an exam session.
-        </p>
+    <div class="login-shell">
 
 
-        {% if registered %}
+        <!-- =================================================
+             LEFT VISUAL SECTION
+             ================================================= -->
 
-            <div class="banner banner-success">
-                Registration complete. You can sign in now.
+        <div class="visual-panel">
+
+            <div class="dot dot-one"></div>
+            <div class="dot dot-two"></div>
+            <div class="dot dot-three"></div>
+
+            <div class="security-visual">
+
+                <div class="security-ring"></div>
+
+                <div class="security-core"></div>
+
             </div>
 
-        {% endif %}
+        </div>
 
 
-        {% if error %}
+        <!-- =================================================
+             RIGHT LOGIN SECTION
+             ================================================= -->
 
-            <div class="banner banner-error">
-                {{ error }}
-            </div>
+        <div class="login-content">
 
-        {% endif %}
+            <h1>Candidate sign in</h1>
 
-
-        <form method="POST">
-
-            <label>Email</label>
-
-            <input
-                type="email"
-                name="email"
-                required
-                autofocus
-            >
+            <p class="subtitle">
+                Enter your registered email and password to begin an exam session.
+            </p>
 
 
-            <label>Password</label>
+            {% if registered %}
 
-            <input
-                type="password"
-                name="password"
-                required
-            >
+                <div class="banner banner-success">
+                    Registration complete. You can sign in now.
+                </div>
 
-
-            <button
-                type="submit"
-                class="btn btn-primary btn-block"
-            >
-                Sign in
-            </button>
-
-        </form>
+            {% endif %}
 
 
-        <p class="helper-text">
-            No account yet?
-            <a
-                class="text-link"
-                href="{{ url_for('register') }}"
-            >
-                Register with your photo ID
-            </a>.
-        </p>
+            {% if error %}
+
+                <div class="banner banner-error">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    required
+                    autofocus
+                >
+
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-block"
+                >
+                    Sign in
+                </button>
+
+            </form>
+
+
+            <p class="helper-text">
+
+                No account yet?
+
+                <a
+                    class="text-link"
+                    href="{{ url_for('register') }}"
+                >
+                    Register with your photo ID
+                </a>.
+
+            </p>
+
+        </div>
 
     </div>
 
 </div>
 
+
 {% endblock %}
-```

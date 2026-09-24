@@ -1,4 +1,3 @@
-```html
 {% extends "base.html" %}
 
 {% block title %}Register — ExamGuard{% endblock %}
@@ -10,407 +9,1498 @@
 {% block content %}
 
 <style>
-    /* =========================================
-       EXAMGUARD REGISTRATION PAGE
-       ========================================= */
+
+    /* =========================================================
+       EXAMGUARD — PROFESSIONAL REGISTRATION
+       Existing Flask/Jinja + camera functionality preserved
+       ========================================================= */
 
     .examguard-register {
         width: 100%;
-        max-width: 650px;
+        max-width: 1120px;
         margin: 35px auto;
+        padding: 0 20px;
+        box-sizing: border-box;
     }
 
-    /* Main Card */
-    .examguard-register .card {
+
+    /* =========================================================
+       MAIN REGISTRATION SHELL
+       ========================================================= */
+
+    .examguard-register .register-shell {
+
+        display: grid;
+
+        grid-template-columns:
+            0.78fr
+            1.22fr;
+
+        min-height: 680px;
+
         background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 20px;
-        padding: 35px;
-        box-shadow: 0 15px 40px rgba(15, 23, 42, 0.10);
-        animation: registerAppear 0.45s ease;
+
+        border:
+            1px solid #e5e7eb;
+
+        border-radius: 28px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 25px 70px rgba(15, 23, 42, 0.10),
+            0 5px 20px rgba(15, 23, 42, 0.04);
+
+        animation:
+            registerAppear 0.55s ease;
     }
+
 
     @keyframes registerAppear {
+
         from {
             opacity: 0;
-            transform: translateY(12px);
+            transform: translateY(18px);
         }
 
         to {
             opacity: 1;
             transform: translateY(0);
         }
+
     }
 
-    /* Heading */
-    .examguard-register h1 {
-        margin: 0 0 8px;
-        color: #111827;
-        font-size: 29px;
-        font-weight: 700;
-        letter-spacing: -0.5px;
-    }
 
-    /* Subtitle */
-    .examguard-register .subtitle {
-        margin: 0 0 25px;
-        color: #64748b;
-        font-size: 14px;
-        line-height: 1.7;
-    }
+    /* =========================================================
+       LEFT INFORMATION PANEL
+       ========================================================= */
 
-    /* Error Banner */
-    .examguard-register .banner {
-        padding: 13px 15px;
-        border-radius: 10px;
-        margin-bottom: 22px;
-        font-size: 14px;
-        line-height: 1.5;
-    }
+    .examguard-register .info-panel {
 
-    .examguard-register .banner-error {
-        background: #fef2f2;
-        border: 1px solid #fecaca;
-        color: #b91c1c;
-    }
+        position: relative;
 
-    /* Form */
-    .examguard-register form {
         display: flex;
+
+        flex-direction: column;
+
+        justify-content: space-between;
+
+        padding: 52px 42px;
+
+        color: #ffffff;
+
+        background:
+
+            radial-gradient(
+                circle at 20% 15%,
+                rgba(99, 102, 241, 0.28),
+                transparent 32%
+            ),
+
+            radial-gradient(
+                circle at 85% 85%,
+                rgba(37, 99, 235, 0.20),
+                transparent 35%
+            ),
+
+            linear-gradient(
+                145deg,
+                #0b1220 0%,
+                #111827 55%,
+                #172554 100%
+            );
+
+        overflow: hidden;
+    }
+
+
+    /* Decorative rings */
+
+    .examguard-register .info-panel::before {
+
+        content: "";
+
+        position: absolute;
+
+        width: 350px;
+        height: 350px;
+
+        border:
+            1px solid rgba(255,255,255,0.07);
+
+        border-radius: 50%;
+
+        top: -180px;
+        left: -170px;
+    }
+
+
+    .examguard-register .info-panel::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 430px;
+        height: 430px;
+
+        border:
+            1px solid rgba(255,255,255,0.05);
+
+        border-radius: 50%;
+
+        bottom: -250px;
+        right: -250px;
+    }
+
+
+    /* =========================================================
+       BRAND MARK
+       ========================================================= */
+
+    .examguard-register .registration-brand {
+
+        position: relative;
+
+        z-index: 2;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+    }
+
+
+    .examguard-register .registration-brand-icon {
+
+        width: 44px;
+        height: 44px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 13px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #6366f1,
+                #2563eb
+            );
+
+        box-shadow:
+            0 10px 25px rgba(37,99,235,0.30);
+    }
+
+
+    .examguard-register .registration-brand-icon::before {
+
+        content: "";
+
+        width: 18px;
+        height: 22px;
+
+        border:
+            2px solid rgba(255,255,255,0.95);
+
+        border-radius:
+            8px 8px 10px 10px;
+
+        clip-path:
+            polygon(
+                50% 0%,
+                92% 15%,
+                88% 63%,
+                50% 100%,
+                12% 63%,
+                8% 15%
+            );
+    }
+
+
+    .examguard-register .registration-brand-text {
+
+        display: flex;
+
         flex-direction: column;
     }
 
-    /* Labels */
-    .examguard-register label {
-        margin-bottom: 7px;
-        color: #334155;
+
+    .examguard-register .registration-brand-name {
+
+        font-size: 17px;
+
+        font-weight: 750;
+
+        letter-spacing: -0.2px;
+    }
+
+
+    .examguard-register .registration-brand-caption {
+
+        margin-top: 3px;
+
+        color: #94a3b8;
+
+        font-size: 9px;
+
+        font-weight: 650;
+
+        letter-spacing: 1.1px;
+
+        text-transform: uppercase;
+    }
+
+
+    /* =========================================================
+       LEFT CONTENT
+       ========================================================= */
+
+    .examguard-register .info-content {
+
+        position: relative;
+
+        z-index: 2;
+
+        margin-top: 75px;
+    }
+
+
+    .examguard-register .info-eyebrow {
+
+        margin-bottom: 15px;
+
+        color: #818cf8;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        letter-spacing: 1.5px;
+
+        text-transform: uppercase;
+    }
+
+
+    .examguard-register .info-content h2 {
+
+        margin: 0 0 18px;
+
+        max-width: 350px;
+
+        color: #ffffff;
+
+        font-size: 36px;
+
+        line-height: 1.13;
+
+        font-weight: 750;
+
+        letter-spacing: -1px;
+    }
+
+
+    .examguard-register .info-description {
+
+        max-width: 360px;
+
+        margin: 0;
+
+        color: #cbd5e1;
+
         font-size: 14px;
-        font-weight: 600;
+
+        line-height: 1.75;
     }
 
-    /* Input Fields */
-    .examguard-register input[type="text"],
-    .examguard-register input[type="email"],
-    .examguard-register input[type="password"] {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 13px 14px;
-        margin-bottom: 18px;
-        border: 1px solid #cbd5e1;
-        border-radius: 10px;
-        background: #ffffff;
-        color: #111827;
-        font-size: 14px;
-        outline: none;
-        transition: all 0.2s ease;
+
+    /* =========================================================
+       SECURITY POINTS
+       ========================================================= */
+
+    .examguard-register .security-points {
+
+        position: relative;
+
+        z-index: 2;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 13px;
+
+        margin-top: 34px;
     }
 
-    .examguard-register input:hover {
-        border-color: #94a3b8;
+
+    .examguard-register .security-point {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        color: #dbeafe;
+
+        font-size: 13px;
     }
 
-    .examguard-register input:focus {
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
-    }
 
-    /* Candidate Photo Heading */
-    .examguard-register h3 {
-        margin-bottom: 7px;
-        color: #111827;
-        font-size: 19px;
+    .examguard-register .security-check {
+
+        width: 27px;
+        height: 27px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border:
+            1px solid rgba(129,140,248,0.25);
+
+        border-radius: 8px;
+
+        background:
+            rgba(99,102,241,0.13);
+
+        color: #a5b4fc;
+
+        font-size: 13px;
+
         font-weight: 700;
     }
 
-    /* Helper Text */
-    .examguard-register .helper-text {
-        color: #64748b;
-        font-size: 13px;
+
+    /* =========================================================
+       LEFT FOOTER
+       ========================================================= */
+
+    .examguard-register .info-footer {
+
+        position: relative;
+
+        z-index: 2;
+
+        padding-top: 28px;
+
+        border-top:
+            1px solid rgba(255,255,255,0.08);
+
+        color: #94a3b8;
+
+        font-size: 11px;
+
         line-height: 1.6;
     }
 
-    /* Camera Information */
-    .camera-section {
-        margin-top: 22px;
-        padding: 20px;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 14px;
+
+    /* =========================================================
+       RIGHT FORM PANEL
+       ========================================================= */
+
+    .examguard-register .form-panel {
+
+        padding: 50px 55px;
+
+        background: #ffffff;
+
+        overflow: hidden;
     }
 
-    /* Camera */
-    .examguard-register #camera {
-        width: 100%;
-        max-width: 420px !important;
-        height: auto;
-        min-height: 240px;
-        object-fit: cover;
-        border-radius: 14px !important;
-        border: 3px solid #e2e8f0 !important;
-        display: block;
-        margin: 15px auto 0 !important;
-        background: #0f172a !important;
-        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+
+    /* =========================================================
+       FORM HEADING
+       ========================================================= */
+
+    .examguard-register .form-heading {
+
+        margin-bottom: 30px;
     }
 
-    /* Captured Photo */
-    .examguard-register .photo-preview {
-        width: 100%;
-        max-width: 420px;
-        max-height: 320px;
-        object-fit: cover;
-        border-radius: 14px;
-        border: 3px solid #6366f1;
-        margin: 18px auto 0;
-        display: block;
-        box-shadow: 0 8px 25px rgba(79, 70, 229, 0.18);
+
+    .examguard-register .form-heading h1 {
+
+        margin: 0 0 9px;
+
+        color: #0f172a;
+
+        font-size: 30px;
+
+        line-height: 1.2;
+
+        font-weight: 750;
+
+        letter-spacing: -0.7px;
     }
 
-    /* Button Row */
-    .examguard-register .btn-row {
+
+    .examguard-register .subtitle {
+
+        max-width: 590px;
+
+        margin: 0;
+
+        color: #64748b;
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+
+    /* =========================================================
+       ERROR
+       ========================================================= */
+
+    .examguard-register .banner {
+
+        padding: 13px 15px;
+
+        margin-bottom: 22px;
+
+        border-radius: 12px;
+
+        font-size: 13px;
+
+        line-height: 1.5;
+    }
+
+
+    .examguard-register .banner-error {
+
+        background: #fef2f2;
+
+        border:
+            1px solid #fecaca;
+
+        color: #b91c1c;
+    }
+
+
+    /* =========================================================
+       FORM
+       ========================================================= */
+
+    .examguard-register form {
+
         display: flex;
-        gap: 12px;
-        margin-top: 18px !important;
+
+        flex-direction: column;
     }
 
-    /* Buttons */
-    .examguard-register .btn {
-        border: none;
-        border-radius: 10px;
-        padding: 13px 20px;
+
+    /* =========================================================
+       FIELD GROUP
+       ========================================================= */
+
+    .examguard-register .field-group {
+
+        margin-bottom: 18px;
+    }
+
+
+    .examguard-register label {
+
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #334155;
+
+        font-size: 13px;
+
+        font-weight: 650;
+    }
+
+
+    /* =========================================================
+       INPUTS
+       ========================================================= */
+
+    .examguard-register input[type="text"],
+    .examguard-register input[type="email"],
+    .examguard-register input[type="password"] {
+
+        width: 100%;
+
+        height: 49px;
+
+        box-sizing: border-box;
+
+        padding:
+            0 14px;
+
+        border:
+            1px solid #dbe1ea;
+
+        border-radius: 11px;
+
+        background: #f8fafc;
+
+        color: #0f172a;
+
         font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.25s ease;
+
+        outline: none;
+
+        transition:
+            border-color 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
     }
 
-    /* Secondary Buttons */
-    .examguard-register .btn-secondary {
-        flex: 1;
-        background: #eef2ff;
-        color: #4338ca;
-        border: 1px solid #c7d2fe;
+
+    .examguard-register input::placeholder {
+
+        color: #94a3b8;
     }
+
+
+    .examguard-register input:hover {
+
+        border-color: #b8c1d1;
+
+        background: #ffffff;
+    }
+
+
+    .examguard-register input:focus {
+
+        border-color: #6366f1;
+
+        background: #ffffff;
+
+        box-shadow:
+            0 0 0 4px rgba(99,102,241,0.10);
+
+        transform:
+            translateY(-1px);
+    }
+
+
+    /* =========================================================
+       CAMERA SECTION
+       ========================================================= */
+
+    .examguard-register .camera-section {
+
+        margin-top: 28px;
+
+        padding: 20px;
+
+        border:
+            1px solid #e2e8f0;
+
+        border-radius: 17px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #f8fafc,
+                #f1f5f9
+            );
+    }
+
+
+    .examguard-register .camera-heading {
+
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-bottom: 6px;
+    }
+
+
+    .examguard-register h3 {
+
+        margin: 0;
+
+        color: #0f172a;
+
+        font-size: 18px;
+
+        line-height: 1.3;
+
+        font-weight: 700;
+    }
+
+
+    .examguard-register .camera-badge {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        flex-shrink: 0;
+
+        padding: 6px 9px;
+
+        border-radius: 999px;
+
+        background: #ffffff;
+
+        border:
+            1px solid #dbeafe;
+
+        color: #475569;
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+        letter-spacing: 0.5px;
+
+        text-transform: uppercase;
+    }
+
+
+    .examguard-register .camera-badge-dot {
+
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: #94a3b8;
+    }
+
+
+    .examguard-register .camera-badge.active {
+
+        color: #047857;
+
+        border-color: #bbf7d0;
+
+        background: #f0fdf4;
+    }
+
+
+    .examguard-register .camera-badge.active .camera-badge-dot {
+
+        background: #22c55e;
+
+        box-shadow:
+            0 0 0 3px rgba(34,197,94,0.12);
+    }
+
+
+    .examguard-register .helper-text {
+
+        margin: 0;
+
+        color: #64748b;
+
+        font-size: 12px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================================================
+       CAMERA FRAME
+       ========================================================= */
+
+    .examguard-register .camera-frame {
+
+        position: relative;
+
+        width: 100%;
+
+        max-width: 500px;
+
+        min-height: 270px;
+
+        margin: 18px auto 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border:
+            1px solid #cbd5e1;
+
+        border-radius: 15px;
+
+        background: #0b1220;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 10px 30px rgba(15,23,42,0.10);
+    }
+
+
+    .examguard-register #camera {
+
+        width: 100%;
+
+        max-width: 100% !important;
+
+        height: 290px;
+
+        object-fit: cover;
+
+        display: block;
+
+        margin: 0 !important;
+
+        border: none !important;
+
+        border-radius: 0 !important;
+
+        background: #0b1220 !important;
+    }
+
+
+    /* Camera corner guides */
+
+    .examguard-register .camera-frame::before,
+    .examguard-register .camera-frame::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 22px;
+        height: 22px;
+
+        z-index: 4;
+
+        pointer-events: none;
+    }
+
+
+    .examguard-register .camera-frame::before {
+
+        top: 12px;
+        left: 12px;
+
+        border-top:
+            2px solid rgba(255,255,255,0.85);
+
+        border-left:
+            2px solid rgba(255,255,255,0.85);
+    }
+
+
+    .examguard-register .camera-frame::after {
+
+        right: 12px;
+        bottom: 12px;
+
+        border-right:
+            2px solid rgba(255,255,255,0.85);
+
+        border-bottom:
+            2px solid rgba(255,255,255,0.85);
+    }
+
+
+    /* =========================================================
+       PHOTO PREVIEW
+       ========================================================= */
+
+    .examguard-register .photo-preview {
+
+        width: 100%;
+
+        max-width: 500px;
+
+        max-height: 330px;
+
+        object-fit: cover;
+
+        border:
+            3px solid #6366f1;
+
+        border-radius: 15px;
+
+        margin: 18px auto 0;
+
+        display: block;
+
+        box-shadow:
+            0 10px 28px rgba(79,70,229,0.18);
+    }
+
+
+    /* =========================================================
+       CAMERA BUTTONS
+       ========================================================= */
+
+    .examguard-register .btn-row {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+
+        margin-top: 14px !important;
+    }
+
+
+    .examguard-register .btn {
+
+        min-height: 45px;
+
+        border: none;
+
+        border-radius: 10px;
+
+        padding: 0 16px;
+
+        font-size: 13px;
+
+        font-weight: 650;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease,
+            opacity 0.2s ease;
+    }
+
+
+    .examguard-register .btn-secondary {
+
+        background: #ffffff;
+
+        color: #4338ca;
+
+        border:
+            1px solid #c7d2fe;
+
+        box-shadow:
+            0 3px 10px rgba(15,23,42,0.04);
+    }
+
 
     .examguard-register .btn-secondary:hover:not(:disabled) {
-        background: #e0e7ff;
-        transform: translateY(-1px);
+
+        background: #eef2ff;
+
+        transform:
+            translateY(-1px);
+
+        box-shadow:
+            0 6px 14px rgba(79,70,229,0.10);
     }
 
-    /* Disabled Button */
+
+    .examguard-register .btn-primary {
+
+        background:
+            linear-gradient(
+                135deg,
+                #4f46e5,
+                #6366f1
+            );
+
+        color: #ffffff;
+
+        box-shadow:
+            0 8px 20px rgba(79,70,229,0.22);
+    }
+
+
+    .examguard-register .btn-primary:hover:not(:disabled) {
+
+        background:
+            linear-gradient(
+                135deg,
+                #4338ca,
+                #4f46e5
+            );
+
+        transform:
+            translateY(-2px);
+
+        box-shadow:
+            0 12px 25px rgba(79,70,229,0.30);
+    }
+
+
     .examguard-register button:disabled {
+
         cursor: not-allowed;
-        opacity: 0.55;
+
+        opacity: 0.52;
+
         transform: none !important;
+
         box-shadow: none !important;
     }
 
-    /* Primary Button */
-    .examguard-register .btn-primary {
-        background: linear-gradient(135deg, #4f46e5, #6366f1);
-        color: #ffffff;
-        box-shadow: 0 7px 18px rgba(79, 70, 229, 0.25);
-    }
 
-    .examguard-register .btn-primary:hover:not(:disabled) {
-        background: linear-gradient(135deg, #4338ca, #4f46e5);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
-    }
+    /* =========================================================
+       PHOTO STATUS
+       ========================================================= */
 
-    /* Full Width Button */
-    .examguard-register .btn-block {
-        width: 100%;
-        margin-top: 20px;
-        padding: 14px 20px;
-        font-size: 15px;
-    }
-
-    /* Photo Status */
     .examguard-register #photoStatus {
+
         min-height: 20px;
-        margin: 14px 0 0;
-        padding: 8px 0;
+
+        margin: 12px 0 0;
+
+        padding: 5px 2px;
+
         color: #475569;
-        font-size: 13px;
+
+        font-size: 12px;
+
+        line-height: 1.5;
+
+        text-align: center;
     }
 
-    /* =========================================
-       MOBILE RESPONSIVE
-       ========================================= */
 
-    @media (max-width: 650px) {
+    /* =========================================================
+       COMPLETE REGISTRATION
+       ========================================================= */
+
+    .examguard-register .btn-block {
+
+        width: 100%;
+
+        min-height: 52px;
+
+        margin-top: 20px;
+
+        padding: 0 20px;
+
+        font-size: 14px;
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 900px) {
 
         .examguard-register {
-            margin: 20px auto;
-            padding: 0 5px;
-            box-sizing: border-box;
+
+            max-width: 720px;
+
+            margin: 25px auto;
         }
 
-        .examguard-register .card {
-            padding: 25px 20px;
-            border-radius: 16px;
+
+        .examguard-register .register-shell {
+
+            grid-template-columns: 1fr;
         }
 
-        .examguard-register h1 {
-            font-size: 24px;
+
+        .examguard-register .info-panel {
+
+            min-height: 370px;
+
+            padding: 38px 35px;
         }
 
-        .examguard-register .subtitle {
+
+        .examguard-register .info-content {
+
+            margin-top: 35px;
+        }
+
+
+        .examguard-register .info-content h2 {
+
+            font-size: 31px;
+        }
+
+
+        .examguard-register .form-panel {
+
+            padding: 42px 38px;
+        }
+    }
+
+
+    @media (max-width: 600px) {
+
+        .examguard-register {
+
+            margin: 18px auto;
+
+            padding: 0 12px;
+        }
+
+
+        .examguard-register .register-shell {
+
+            border-radius: 20px;
+        }
+
+
+        .examguard-register .info-panel {
+
+            min-height: 330px;
+
+            padding: 30px 25px;
+        }
+
+
+        .examguard-register .info-content h2 {
+
+            font-size: 27px;
+
+            letter-spacing: -0.6px;
+        }
+
+
+        .examguard-register .info-description {
+
             font-size: 13px;
         }
 
-        .examguard-register #camera {
-            min-height: 200px;
+
+        .examguard-register .form-panel {
+
+            padding: 32px 23px;
         }
 
-        .examguard-register .btn-row {
+
+        .examguard-register .form-heading h1 {
+
+            font-size: 27px;
+        }
+
+
+        .examguard-register .camera-heading {
+
             flex-direction: column;
         }
 
-        .examguard-register .btn-secondary {
-            width: 100%;
+
+        .examguard-register .camera-frame {
+
+            min-height: 220px;
+        }
+
+
+        .examguard-register #camera {
+
+            height: 230px;
+        }
+
+
+        .examguard-register .btn-row {
+
+            grid-template-columns: 1fr;
+
         }
     }
+
 
     @media (max-width: 400px) {
 
-        .examguard-register .card {
-            padding: 20px 16px;
+        .examguard-register .info-panel {
+
+            padding: 27px 20px;
         }
 
-        .examguard-register h1 {
-            font-size: 22px;
+
+        .examguard-register .form-panel {
+
+            padding: 28px 18px;
         }
 
-        .examguard-register h3 {
-            font-size: 17px;
+
+        .examguard-register .form-heading h1 {
+
+            font-size: 24px;
         }
+
+
+        .examguard-register .camera-section {
+
+            padding: 15px;
+        }
+
 
         .examguard-register #camera {
-            min-height: 180px;
+
+            height: 205px;
         }
     }
+
+
+    /* =========================================================
+       ACCESSIBILITY
+       ========================================================= */
+
+    .examguard-register button:focus-visible,
+    .examguard-register input:focus-visible,
+    .examguard-register a:focus-visible {
+
+        outline:
+            3px solid rgba(99,102,241,0.22);
+
+        outline-offset: 2px;
+    }
+
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .examguard-register .register-shell,
+        .examguard-register input,
+        .examguard-register button {
+
+            animation: none !important;
+
+            transition: none !important;
+        }
+    }
+
 </style>
 
 
 <div class="examguard-register">
 
-    <div class="card">
-
-        <h1>Candidate registration</h1>
-
-        <p class="subtitle">
-            Your details and a live photo are required before you can sit an exam.
-            The photo is captured from your webcam right now — no file uploads.
-        </p>
+    <div class="register-shell">
 
 
-        {% if error %}
-            <div class="banner banner-error">
-                {{ error }}
+        <!-- =================================================
+             LEFT INFORMATION PANEL
+             ================================================= -->
+
+        <section class="info-panel">
+
+
+            <div class="registration-brand">
+
+                <div
+                    class="registration-brand-icon"
+                    aria-hidden="true"
+                ></div>
+
+                <div class="registration-brand-text">
+
+                    <span class="registration-brand-name">
+                        ExamGuard
+                    </span>
+
+                    <span class="registration-brand-caption">
+                        Secure Examination Platform
+                    </span>
+
+                </div>
+
             </div>
-        {% endif %}
 
 
-        <form method="POST" id="registerForm">
+            <div class="info-content">
 
-            <label>Full name</label>
+                <div class="info-eyebrow">
+                    Candidate verification
+                </div>
 
-            <input
-                type="text"
-                name="name"
-                required
+                <h2>
+                    Create your examination profile.
+                </h2>
+
+                <p class="info-description">
+                    Your details and a live photo are required before you can sit an exam.
+                    The photo is captured from your webcam right now — no file uploads.
+                </p>
+
+
+                <div class="security-points">
+
+                    <div class="security-point">
+
+                        <span class="security-check">
+                            ✓
+                        </span>
+
+                        <span>
+                            Candidate details securely registered
+                        </span>
+
+                    </div>
+
+
+                    <div class="security-point">
+
+                        <span class="security-check">
+                            ✓
+                        </span>
+
+                        <span>
+                            Live webcam photo captured
+                        </span>
+
+                    </div>
+
+
+                    <div class="security-point">
+
+                        <span class="security-check">
+                            ✓
+                        </span>
+
+                        <span>
+                            Examination presence monitoring
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-footer">
+
+                Candidate registration is required before starting an examination session.
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RIGHT FORM PANEL
+             ================================================= -->
+
+        <section class="form-panel">
+
+
+            <div class="form-heading">
+
+                <h1>
+                    Candidate registration
+                </h1>
+
+                <p class="subtitle">
+                    Your details and a live photo are required before you can sit an exam.
+                    The photo is captured from your webcam right now — no file uploads.
+                </p>
+
+            </div>
+
+
+            {% if error %}
+
+                <div class="banner banner-error">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+
+            <form
+                method="POST"
+                id="registerForm"
             >
 
 
-            <label>Email</label>
+                <!-- FULL NAME -->
 
-            <input
-                type="email"
-                name="email"
-                required
-            >
+                <div class="field-group">
 
+                    <label>
+                        Full name
+                    </label>
 
-            <label>Password</label>
-
-            <input
-                type="password"
-                name="password"
-                required
-                minlength="6"
-            >
-
-
-            <h3 style="margin-top:32px;">
-                Candidate photo
-            </h3>
-
-
-            <p class="helper-text" style="margin-top:-2px;">
-                Used only for the invigilator's record — ExamGuard does not perform face
-                recognition, only presence checks during the exam.
-            </p>
-
-
-            <div class="camera-section">
-
-                <video
-                    id="camera"
-                    autoplay
-                    playsinline
-                    style="width:100%;max-width:320px;border-radius:4px;border:1px solid var(--rule);display:block;margin-top:10px;background:#000;"
-                ></video>
-
-                <canvas id="canvas" style="display:none;"></canvas>
-
-                <img
-                    id="preview"
-                    class="photo-preview"
-                    style="display:none;"
-                    alt="Captured photo"
-                >
-
-
-                <div class="btn-row" style="margin-top:14px;">
-
-                    <button
-                        type="button"
-                        id="startCamera"
-                        class="btn btn-secondary"
+                    <input
+                        type="text"
+                        name="name"
+                        required
                     >
-                        Start camera
-                    </button>
-
-
-                    <button
-                        type="button"
-                        id="capturePhoto"
-                        class="btn btn-secondary"
-                        disabled
-                    >
-                        Capture photo
-                    </button>
 
                 </div>
 
 
-                <p id="photoStatus" class="helper-text"></p>
+                <!-- EMAIL -->
 
-            </div>
+                <div class="field-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        required
+                    >
+
+                </div>
 
 
-            <button
-                type="submit"
-                id="registerButton"
-                class="btn btn-primary btn-block"
-                disabled
-            >
-                Complete registration
-            </button>
+                <!-- PASSWORD -->
 
-        </form>
+                <div class="field-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        required
+                        minlength="6"
+                    >
+
+                </div>
+
+
+                <!-- CANDIDATE PHOTO -->
+
+                <div class="camera-section">
+
+
+                    <div class="camera-heading">
+
+                        <div>
+
+                            <h3>
+                                Candidate photo
+                            </h3>
+
+                            <p
+                                class="helper-text"
+                                style="margin-top:5px;"
+                            >
+                                Used only for the invigilator's record — ExamGuard does not
+                                perform face recognition, only presence checks during the exam.
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="camera-badge"
+                            id="cameraBadge"
+                        >
+
+                            <span
+                                class="camera-badge-dot"
+                                id="cameraBadgeDot"
+                            ></span>
+
+                            Camera
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CAMERA -->
+
+                    <div class="camera-frame">
+
+                        <video
+                            id="camera"
+                            autoplay
+                            playsinline
+                        ></video>
+
+                    </div>
+
+
+                    <!-- CANVAS -->
+
+                    <canvas
+                        id="canvas"
+                        style="display:none;"
+                    ></canvas>
+
+
+                    <!-- PHOTO PREVIEW -->
+
+                    <img
+                        id="preview"
+                        class="photo-preview"
+                        style="display:none;"
+                        alt="Captured photo"
+                    >
+
+
+                    <!-- CAMERA BUTTONS -->
+
+                    <div
+                        class="btn-row"
+                        style="margin-top:14px;"
+                    >
+
+
+                        <button
+                            type="button"
+                            id="startCamera"
+                            class="btn btn-secondary"
+                        >
+                            Start camera
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="capturePhoto"
+                            class="btn btn-secondary"
+                            disabled
+                        >
+                            Capture photo
+                        </button>
+
+
+                    </div>
+
+
+                    <p
+                        id="photoStatus"
+                        class="helper-text"
+                    ></p>
+
+
+                </div>
+
+
+                <!-- REGISTER -->
+
+                <button
+                    type="submit"
+                    id="registerButton"
+                    class="btn btn-primary btn-block"
+                    disabled
+                >
+                    Complete registration
+                </button>
+
+
+            </form>
+
+        </section>
 
     </div>
 
@@ -424,125 +1514,204 @@
 
 <script>
 
-    const video = document.getElementById("camera");
-    const canvas = document.getElementById("canvas");
-    const preview = document.getElementById("preview");
-    const startCameraButton = document.getElementById("startCamera");
-    const captureButton = document.getElementById("capturePhoto");
-    const registerButton = document.getElementById("registerButton");
-    const photoStatus = document.getElementById("photoStatus");
+    const video =
+        document.getElementById("camera");
+
+    const canvas =
+        document.getElementById("canvas");
+
+    const preview =
+        document.getElementById("preview");
+
+    const startCameraButton =
+        document.getElementById("startCamera");
+
+    const captureButton =
+        document.getElementById("capturePhoto");
+
+    const registerButton =
+        document.getElementById("registerButton");
+
+    const photoStatus =
+        document.getElementById("photoStatus");
+
+    const cameraBadge =
+        document.getElementById("cameraBadge");
+
 
     let cameraStream = null;
 
 
-    // ---------------- START CAMERA ----------------
+    // =====================================================
+    // START CAMERA
+    // Existing functionality preserved
+    // =====================================================
 
-    startCameraButton.addEventListener("click", async function () {
+    startCameraButton.addEventListener(
+        "click",
+        async function () {
 
-        try {
+            try {
 
-            cameraStream =
-                await navigator.mediaDevices.getUserMedia({
-                    video: true
-                });
-
-            video.srcObject = cameraStream;
-
-            captureButton.disabled = false;
-
-            photoStatus.textContent =
-                "Camera started. Position your face and click Capture photo.";
-
-        } catch (error) {
-
-            console.error(error);
-
-            photoStatus.textContent =
-                "Unable to access camera. Please allow camera permission.";
-
-        }
-
-    });
+                cameraStream =
+                    await navigator.mediaDevices.getUserMedia({
+                        video: true
+                    });
 
 
-    // ---------------- CAPTURE PHOTO ----------------
-
-    captureButton.addEventListener("click", function () {
-
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const context = canvas.getContext("2d");
-
-        context.drawImage(
-            video,
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
+                video.srcObject =
+                    cameraStream;
 
 
-        preview.src =
-            canvas.toDataURL("image/jpeg");
-
-        preview.style.display = "block";
-
-        photoStatus.textContent =
-            "Photo captured. Saving...";
+                captureButton.disabled =
+                    false;
 
 
-        canvas.toBlob(async function (blob) {
+                cameraBadge.classList.add("active");
 
-            const formData = new FormData();
+                cameraBadge.innerHTML =
+                    '<span class="camera-badge-dot"></span> Camera active';
 
-            formData.append(
-                "photo",
-                blob,
-                "candidate.jpg"
-            );
-
-
-            const response = await fetch(
-                "/capture-photo",
-                {
-                    method: "POST",
-                    body: formData
-                }
-            );
-
-
-            const result = await response.json();
-
-
-            if (result.success) {
 
                 photoStatus.textContent =
-                    "Photo captured successfully.";
-
-                registerButton.disabled = false;
-
-
-                if (cameraStream) {
-
-                    cameraStream
-                        .getTracks()
-                        .forEach(track => track.stop());
-
-                }
-
-            } else {
-
-                photoStatus.textContent =
-                    "Photo capture failed. Please try again.";
+                    "Camera started. Position your face and click Capture photo.";
 
             }
 
-        }, "image/jpeg");
+            catch (error) {
 
-    });
+                console.error(error);
+
+
+                photoStatus.textContent =
+                    "Unable to access camera. Please allow camera permission.";
+
+            }
+
+        }
+    );
+
+
+    // =====================================================
+    // CAPTURE PHOTO
+    // Existing functionality preserved
+    // =====================================================
+
+    captureButton.addEventListener(
+        "click",
+        function () {
+
+
+            canvas.width =
+                video.videoWidth;
+
+
+            canvas.height =
+                video.videoHeight;
+
+
+            const context =
+                canvas.getContext("2d");
+
+
+            context.drawImage(
+                video,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            preview.src =
+                canvas.toDataURL("image/jpeg");
+
+
+            preview.style.display =
+                "block";
+
+
+            photoStatus.textContent =
+                "Photo captured. Saving...";
+
+
+            canvas.toBlob(
+                async function (blob) {
+
+
+                    const formData =
+                        new FormData();
+
+
+                    formData.append(
+                        "photo",
+                        blob,
+                        "candidate.jpg"
+                    );
+
+
+                    const response =
+                        await fetch(
+                            "/capture-photo",
+                            {
+                                method: "POST",
+                                body: formData
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (result.success) {
+
+
+                        photoStatus.textContent =
+                            "Photo captured successfully.";
+
+
+                        registerButton.disabled =
+                            false;
+
+
+                        if (cameraStream) {
+
+                            cameraStream
+                                .getTracks()
+                                .forEach(
+                                    track =>
+                                        track.stop()
+                                );
+
+                        }
+
+
+                        cameraBadge.classList.add(
+                            "active"
+                        );
+
+                        cameraBadge.innerHTML =
+                            '<span class="camera-badge-dot"></span> Photo ready';
+
+
+                    }
+
+                    else {
+
+                        photoStatus.textContent =
+                            "Photo capture failed. Please try again.";
+
+                    }
+
+
+                },
+                "image/jpeg"
+            );
+
+        }
+    );
 
 </script>
 
 {% endblock %}
-```
