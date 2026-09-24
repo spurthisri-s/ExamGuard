@@ -115,5 +115,25 @@ def init_db():
     """)
 
 
+    # ------------------------------------------------
+    # INTEGRITY SCORE
+    # ------------------------------------------------
+
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS integrity_score (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            candidate_id INTEGER NOT NULL,
+            session_id TEXT UNIQUE NOT NULL,
+            score REAL NOT NULL DEFAULT 100,
+            calculated_at TEXT DEFAULT (datetime('now')),
+            FOREIGN KEY (candidate_id) REFERENCES candidates(id)
+        )
+    """)
+
+
+    # ------------------------------------------------
+    # SAVE CHANGES
+    # ------------------------------------------------
+
     connection.commit()
     connection.close()

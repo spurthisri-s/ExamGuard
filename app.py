@@ -313,12 +313,12 @@ def start_exam():
 
         connection.execute("""
             INSERT INTO exam_sessions
-                (
-                    candidate_id,
-                    session_id,
-                    status,
-                    started_at
-                )
+            (
+                candidate_id,
+                session_id,
+                status,
+                started_at
+            )
             VALUES (?, ?, 'in_progress', ?)
         """, (
             session["candidate_id"],
@@ -441,9 +441,19 @@ def submit_exam():
             "message": "No active exam session"
         }, 400
 
+    exam_session_id = session["exam_session_id"]
+
     connection = get_db()
 
     try:
+
+        # Mark the exam session as submitted.
+        #
+        # IMPORTANT:
+        # close_open_face_event() is intentionally NOT called here.
+        #
+        # The integrity score will be handled separately
+        # using the recorded face/browser events.
 
         connection.execute("""
             UPDATE exam_sessions
@@ -453,15 +463,25 @@ def submit_exam():
             WHERE session_id = ?
         """, (
             datetime.now().isoformat(),
-            session["exam_session_id"]
+            exam_session_id
         ))
 
         connection.commit()
+
+    except Exception as e:
+
+        connection.rollback()
+
+        return {
+            "success": False,
+            "message": f"Exam submission failed: {e}"
+        }, 500
 
     finally:
 
         connection.close()
 
+    # Remove only the active exam session from Flask session.
     session.pop("exam_session_id", None)
 
     return redirect(
@@ -607,13 +627,13 @@ def log_browser_event():
 
         connection.execute("""
             INSERT INTO browser_events
-                (
-                    candidate_id,
-                    session_id,
-                    event_type,
-                    event_time,
-                    details
-                )
+            (
+                candidate_id,
+                session_id,
+                event_type,
+                event_time,
+                details
+            )
             VALUES (?, ?, ?, ?, ?)
         """, (
             candidate_id,
